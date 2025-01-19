@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Cristal War</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+  </head>
+  <body>
+
+    <div class="game-container"></div>   
+    
+    <div class="player-info">
+      <div>
+        <label for="player-name">Seu Nome</label>
+        <input id="player-name" maxlength="10" type="text" />
+      </div>
+      <div>
+        <button id="player-color">Mudar Nave</button>
+      </div>
+    </div>
+    <div>
+      <button class="btn-red">Atacar</button>
+    </div>
+
+     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+      // NOTE - INCLUDE YOUR FIREBASE CONFIG HERE FOR ANYTHING TO WORK:
+            const firebaseConfig = {
+        apiKey: "AIzaSyAQNmZuFp9Di062wUfyvnfSmh2neagNJcs",
+        authDomain: "cristalwar.firebaseapp.com",
+        databaseURL: "https://cristalwar-default-rtdb.firebaseio.com",
+        projectId: "cristalwar",
+        storageBucket: "cristalwar.firebasestorage.app",
+        messagingSenderId: "906934240645",
+        appId: "1:906934240645:web:67f71a4f76ba9e0f1a70ec",
+        measurementId: "G-3GHD3QPHJR"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="KeyPressListener.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
