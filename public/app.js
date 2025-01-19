@@ -422,7 +422,47 @@ function getRandomSafeSpot() {
     });
   }
   
+  const allBulletsRef = firebase.database().ref(`bullets`);
 
+allBulletsRef.on("child_added", (snapshot) => {
+  const bullet = snapshot.val();
+  const bulletElement = document.createElement("div");
+  bulletElement.classList.add("Bullet", "grid-cell");
+  bulletElement.style.left = `${16 * bullet.x}px`;
+  bulletElement.style.top = `${16 * bullet.y - 4}px`;
+  bulletElement.dataset.id = snapshot.key;
+  gameContainer.appendChild(bulletElement);
+
+  // Movimentação da bala
+  const bulletInterval = setInterval(() => {
+    if (bullet.direction === "left") bullet.x -= 1;
+    if (bullet.direction === "right") bullet.x += 1;
+    if (bullet.direction === "up") bullet.y -= 1;
+    if (bullet.direction === "down") bullet.y += 1;
+
+    // Atualiza visualmente
+    bulletElement.style.left = `${16 * bullet.x}px`;
+    bulletElement.style.top = `${16 * bullet.y - 4}px`;
+
+    // Remove a bala ao sair do mapa ou colidir com algo
+    if (isSolid(bullet.x, bullet.y)) {
+      firebase.database().ref(`bullets/${snapshot.key}`).remove(); // Remove do Firebase
+    }
+  }, 100);
+
+  // Limpeza quando a bala for removida
+  firebase.database().ref(`bullets/${snapshot.key}`).on("child_removed", () => {
+    clearInterval(bulletInterval);
+    bulletElement.remove();
+  });
+});
+
+allBulletsRef.on("child_removed", (snapshot) => {
+  const bulletElement = document.querySelector(`.Bullet[data-id='${snapshot.key}']`);
+  if (bulletElement) {
+    bulletElement.remove();
+  }
+});
 
   attackButton.addEventListener("click", () => {
     shoot();
